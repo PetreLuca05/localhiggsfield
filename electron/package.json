@@ -1,0 +1,8 @@
+{
+  "name": "openhiggsfield",
+  "productName": "OpenHiggsfield",
+  "version": "0.1.0",
+  "description": "OpenHiggsfield AI studio as a desktop app",
+  "author": "OpenHiggsfield",
+  "main": "main.js"
+}

@@ -4,11 +4,14 @@ node_modules
 out
 dist
 *.local
-.env
-.env.*
-!.env.example
 .vercel
 tsconfig.tsbuildinfo
-
-.env*
 .idea
+
+# Electron build output
+electron-server
+release
+
+# Local settings; .env.example is the committed template.
+.env*
+!.env.example

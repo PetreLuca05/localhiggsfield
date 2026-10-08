@@ -113,9 +113,16 @@ Open the studio, press **Add key**, and paste your platform key as `id:secret`.
 ### Environment
 
 ```bash
-HF_API_BASE_URL=                      # generation API origin, server only
-OPEN_HIGGSFIELD_READ_WRITE_TOKEN=     # Vercel Blob read-write token
+HF_API_BASE_URL=https://platform.higgsfield.ai   # generation API origin, server only
+OPEN_HIGGSFIELD_READ_WRITE_TOKEN=                # Vercel Blob read-write token
 ```
+
+The platform key (`id:secret`) comes from
+[cloud.higgsfield.ai](https://cloud.higgsfield.ai) and goes in the studio's
+**Add key** dialog, not in this file. The Blob token is only needed to attach
+images, video or audio as inputs: in Vercel, create a Blob store (Storage →
+Create → Blob), open its **.env.local** tab and copy `BLOB_READ_WRITE_TOKEN`'s
+value into `OPEN_HIGGSFIELD_READ_WRITE_TOKEN`.
 
 ### Commands
 
@@ -125,6 +132,39 @@ OPEN_HIGGSFIELD_READ_WRITE_TOKEN=     # Vercel Blob read-write token
 | `pnpm build` | Production build |
 | `pnpm start` | Serve the production build |
 | `pnpm brand` | Rebuild the icons and OG card in `public/` |
+| `pnpm electron:dev` | Desktop app over `next dev` (hot reload) |
+| `pnpm electron` | Build, then run the desktop app on the production server |
+| `pnpm dist:win` | Build the Windows installer and portable `.exe` into `release/` |
+
+---
+
+## Windows and the desktop app
+
+Requires **Node.js 22.12 or newer** ([nodejs.org](https://nodejs.org), LTS) and
+Git. In PowerShell:
+
+```powershell
+git clone https://github.com/PetreLuca05/localhiggsfield
+cd localhiggsfield
+corepack enable          # provides the pnpm version pinned in package.json
+pnpm install             # also downloads the Electron binary
+copy .env.example .env.local
+pnpm dev                 # browser:  http://localhost:3000
+pnpm electron:dev        # or the same studio in a desktop window
+```
+
+If `corepack enable` reports a permissions error, run PowerShell as
+Administrator once, or use `npm install -g pnpm` instead.
+
+The desktop app runs the same Next server as a child process on a free
+loopback port, using Electron's own Node, so an installed build needs no
+Node.js on the machine. Its settings live in
+`%APPDATA%\OpenHiggsfield\.env`, created on first launch. Open it from
+**File → Open Settings File…**, then **File → Restart Server** after editing.
+Downloads go straight to your Downloads folder.
+
+`pnpm dist:win` writes an NSIS installer and a portable `.exe` to `release/`.
+They are unsigned, so SmartScreen warns on first run (**More info → Run anyway**).
 
 ---
 

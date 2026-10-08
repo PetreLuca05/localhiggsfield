@@ -1,7 +1,9 @@
 allowBuilds:
+  electron-winstaller: true
   esbuild: true
   lightningcss: true
 onlyBuiltDependencies:
+  - electron-winstaller
   - esbuild
   - sharp
 # The committed lockfile pins these official packages at versions published
